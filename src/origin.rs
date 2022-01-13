@@ -22,6 +22,7 @@ pub enum Origin {
 // Parse an origin from its prefix code
 impl TryFrom<char> for Origin {
     type Error = ParseError;
+    // TODO: parse "(G[B])"
 
     /// Parse an origin from its prefix code
     #[inline]

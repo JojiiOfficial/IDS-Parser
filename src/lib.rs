@@ -41,7 +41,46 @@ mod test {
         let parsed = IDS::from_str(input);
 
         assert!(parsed.is_ok());
-        assert_eq!(parsed.unwrap(), IDS::default())
+        assert_eq!(
+            parsed.unwrap(),
+            IDS {
+                literal: '高',
+                // TODO
+                xrefs: vec![],
+                compositions: vec![Composition {
+                    data: vec![
+                        CompositionPart::Destructive(DestructionForm::Horizontally3),
+                        CompositionPart::Radical('亠'),
+                        CompositionPart::Radical('口'),
+                        CompositionPart::Radical('冋'),
+                    ],
+                    reg_origins: vec![
+                        Origin::China,
+                        Origin::HongKong,
+                        Origin::Japan,
+                        Origin::SouthKorea,
+                        Origin::Taiwan,
+                        Origin::Vietnam,
+                    ]
+                }]
+            }
+        )
+    }
+
+    #[test]
+    fn test_dec_ids_full_2_compositions() {
+        let input = "U+4E12	丒	^⿱刃一$(GT)	^⿱⿹𠃌㐅一$(J)";
+        let parsed = IDS::from_str(input);
+        assert!(parsed.is_ok());
+        // TODO: add full test
+    }
+
+    #[test]
+    fn test_dec_ids_full_xref() {
+        let input = "U+4E8C	二	^⿱一一$(GHJKTV)	*U+4E8C≠U+2011E≠U+2011F≠U+20120";
+        let parsed = IDS::from_str(input);
+        assert!(parsed.is_ok());
+        // TODO: add full test
     }
 
     #[test]
