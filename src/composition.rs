@@ -5,8 +5,8 @@ use crate::{destr_form::DestructionForm, error::ParseError, origin::Origin};
 /// A single composition of the format "^⿳亠口冋$(GHJKTV)"
 #[derive(Default, Debug, PartialEq, Eq)]
 pub struct Composition {
-    pub(crate) reg_origins: Vec<Origin>,
-    pub(crate) data: Vec<CompositionPart>,
+    pub reg_origins: Vec<Origin>,
+    pub data: Vec<CompositionPart>,
 }
 
 /// A single part of the full composition

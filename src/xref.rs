@@ -4,15 +4,15 @@ use crate::{error::ParseError, utils, Origin};
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct XRef {
-    pub(crate) ref_type: RefType,
-    pub(crate) left: XRefItem,
-    pub(crate) right: XRefItem,
+    pub ref_type: RefType,
+    pub left: XRefItem,
+    pub right: XRefItem,
 }
 
 #[derive(Default, Debug, PartialEq, Eq)]
 pub struct XRefItem {
-    pub(crate) literal: char,
-    pub(crate) src_identifier: Option<Origin>,
+    pub literal: char,
+    pub src_identifier: Option<Origin>,
 }
 
 /// Type of cross reference

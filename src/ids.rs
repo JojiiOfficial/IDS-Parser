@@ -5,9 +5,9 @@ use crate::{composition::Composition, error::ParseError, XRef};
 /// A full Ideographic Destruction Sequence item
 #[derive(Default, Debug, PartialEq, Eq)]
 pub struct IDS {
-    pub(crate) literal: char,
-    pub(crate) compositions: Vec<Composition>,
-    pub(crate) xrefs: Vec<XRef>,
+    pub literal: char,
+    pub compositions: Vec<Composition>,
+    pub xrefs: Vec<XRef>,
 }
 
 /// Parse an `IDS` from a full string
