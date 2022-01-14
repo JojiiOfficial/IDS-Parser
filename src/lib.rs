@@ -38,7 +38,11 @@ pub fn map_special_form(inp: char) -> char {
 
 #[cfg(test)]
 mod test {
-    use std::str::FromStr;
+    use std::{
+        fs::File,
+        io::{BufRead, BufReader},
+        str::FromStr,
+    };
 
     use crate::{
         composition::{Composition, CompositionPart},
@@ -57,6 +61,22 @@ mod test {
 
         for (i, code) in inp.iter().enumerate() {
             assert_eq!(utils::utf_code_to_char(code), Some(exp[i]));
+        }
+    }
+
+    #[test]
+    fn test_all() {
+        let reader = BufReader::new(File::open("./IDS.TXT").unwrap());
+        for line in reader.lines() {
+            let line = line.unwrap().trim().to_string();
+            if line.starts_with('#') || line.starts_with('\u{feff}') {
+                continue;
+            }
+
+            let parsed = IDS::from_str(&line);
+            if let Err(err) = parsed {
+                panic!("{line:?}: {err}");
+            }
         }
     }
 

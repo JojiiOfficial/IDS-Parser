@@ -38,6 +38,7 @@ impl FromStr for IDS {
                 }
             }
         }
+
         Ok(IDS {
             literal,
             compositions,

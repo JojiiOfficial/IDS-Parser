@@ -13,8 +13,19 @@ pub struct Composition {
 #[derive(Debug, PartialEq, Eq)]
 pub enum CompositionPart {
     Destructive(DestructionForm),
-    UnencodedComponent(u8),
     Radical(char),
+    Modifier(Modifier),
+    UnencodedComponent(u8),
+}
+
+/// A modifier for another component
+#[derive(Debug, PartialEq, Eq)]
+pub enum Modifier {
+    UnrepresntableCompontent,
+    IdeographicVariation,
+    Mirror,
+    Rotation,
+    Subtraction,
 }
 
 /// Converts an character of a composition into a `CompositionPart`
@@ -25,6 +36,9 @@ impl TryFrom<char> for CompositionPart {
     fn try_from(value: char) -> Result<Self, Self::Error> {
         if let Ok(destructive_form) = DestructionForm::try_from(value) {
             return Ok(CompositionPart::Destructive(destructive_form));
+        }
+        if let Ok(modifier) = Modifier::try_from(value) {
+            return Ok(CompositionPart::Modifier(modifier));
         }
         Ok(CompositionPart::Radical(value))
     }
@@ -75,7 +89,12 @@ impl FromStr for Composition {
                     if n == ')' {
                         break;
                     }
-                    origins.push(Origin::try_from(n)?);
+                    if n == '[' || n == ']' {
+                        continue;
+                    }
+                    if let Ok(origin) = Origin::try_from(n) {
+                        origins.push(origin);
+                    }
                 }
             }
         }
@@ -84,6 +103,30 @@ impl FromStr for Composition {
             data: parts,
             reg_origins: origins,
         })
+    }
+}
+
+impl TryFrom<char> for Modifier {
+    type Error = ();
+
+    #[inline]
+    fn try_from(value: char) -> Result<Self, Self::Error> {
+        Ok(match value {
+            '？' => Modifier::UnrepresntableCompontent,
+            '〾' => Modifier::IdeographicVariation,
+            '↔' => Modifier::Mirror,
+            '↷' => Modifier::Rotation,
+            '⊖' => Modifier::Subtraction,
+            _ => return Err(()),
+        })
+    }
+}
+
+impl Modifier {
+    /// Returns `true` if `c` is a `Modifier`
+    #[inline]
+    pub fn is_modifier(c: char) -> bool {
+        Modifier::try_from(c).is_ok()
     }
 }
 
