@@ -18,6 +18,75 @@ pub enum CompositionPart {
     UnencodedComponent(u8),
 }
 
+impl CompositionPart {
+    /// Returns `true` if the composition part is [`Destructive`].
+    ///
+    /// [`Destructive`]: CompositionPart::Destructive
+    #[inline]
+    pub fn is_destructive(&self) -> bool {
+        matches!(self, Self::Destructive(..))
+    }
+
+    #[inline]
+    pub fn as_destructive(&self) -> Option<&DestructionForm> {
+        if let Self::Destructive(v) = self {
+            Some(v)
+        } else {
+            None
+        }
+    }
+
+    /// Returns `true` if the composition part is [`Radical`].
+    ///
+    /// [`Radical`]: CompositionPart::Radical
+    #[inline]
+    pub fn is_radical(&self) -> bool {
+        matches!(self, Self::Radical(..))
+    }
+
+    #[inline]
+    pub fn as_radical(&self) -> Option<&char> {
+        if let Self::Radical(v) = self {
+            Some(v)
+        } else {
+            None
+        }
+    }
+
+    /// Returns `true` if the composition part is [`Modifier`].
+    ///
+    /// [`Modifier`]: CompositionPart::Modifier
+    #[inline]
+    pub fn is_modifier(&self) -> bool {
+        matches!(self, Self::Modifier(..))
+    }
+
+    #[inline]
+    pub fn as_modifier(&self) -> Option<&Modifier> {
+        if let Self::Modifier(v) = self {
+            Some(v)
+        } else {
+            None
+        }
+    }
+
+    /// Returns `true` if the composition part is [`UnencodedComponent`].
+    ///
+    /// [`UnencodedComponent`]: CompositionPart::UnencodedComponent
+    #[inline]
+    pub fn is_unencoded_component(&self) -> bool {
+        matches!(self, Self::UnencodedComponent(..))
+    }
+
+    pub fn as_unencoded_component(&self) -> Option<&u8> {
+        if let Self::UnencodedComponent(v) = self {
+            Some(v)
+        } else {
+            None
+        }
+    }
+}
+
 /// A modifier for another component
 #[derive(Debug, PartialEq, Eq)]
 pub enum Modifier {
@@ -133,4 +202,16 @@ impl Modifier {
 #[inline]
 fn resolve_unencoded_comp(nr: u8) -> CompositionPart {
     CompositionPart::UnencodedComponent(nr)
+}
+
+impl Composition {
+    /// Returns all radicals from the composition
+    #[inline]
+    pub fn get_radicals(&self) -> Vec<char> {
+        self.data
+            .iter()
+            .filter_map(|i| i.as_radical())
+            .copied()
+            .collect()
+    }
 }
