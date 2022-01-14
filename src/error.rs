@@ -5,7 +5,9 @@ use std::fmt::Display;
 pub enum ParseError {
     InvalidOrigin(char),
     InvalidDestructiveForm(char),
+    InvalidRefType(char),
     InvalidIDS,
+    InvalidXRef,
     InvalidComposition,
     UnexpectedCharacter,
 }

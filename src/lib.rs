@@ -12,6 +12,30 @@ pub use ids::IDS;
 pub use origin::Origin;
 pub use xref::XRef;
 
+const MAPPINGS: &[(char, char)] = &[
+    ('牛', '牜'),
+    ('玉', '𤣩'),
+    ('竹', '𥫗'),
+    ('艸', '艹'),
+    ('肉', '月'),
+    ('糸', '糹'),
+    ('言', '訁'),
+    ('金', '釒'),
+    ('食', '飠'),
+    ('孑', '子'),
+    ('⺶', '羊'),
+];
+
+/// Maps radicals to the respective radical/glyph used in the ids dataset
+#[inline]
+pub fn map_special_form(inp: char) -> char {
+    MAPPINGS
+        .iter()
+        .find(|i| i.0 == inp)
+        .map(|i| i.1)
+        .unwrap_or(inp)
+}
+
 #[cfg(test)]
 mod test {
     use std::str::FromStr;
@@ -21,6 +45,7 @@ mod test {
         destr_form::DestructionForm,
         ids::IDS,
         origin::Origin,
+        xref::{RefType, XRefItem},
     };
 
     use super::*;
@@ -37,7 +62,7 @@ mod test {
 
     #[test]
     fn test_dec_ids_full() {
-        let input = "U+9AD8	高	^⿳亠口冋$(GHJKTV)";
+        let input = "U+9AD8	高	^⿳亠口冋$(GHJKTV)	*U+507D≡U+50DE";
         let parsed = IDS::from_str(input);
 
         assert!(parsed.is_ok());
@@ -45,8 +70,17 @@ mod test {
             parsed.unwrap(),
             IDS {
                 literal: '高',
-                // TODO
-                xrefs: vec![],
+                xrefs: vec![XRef {
+                    ref_type: RefType::UnifiableVariants,
+                    left: XRefItem {
+                        literal: '偽',
+                        src_identifier: None,
+                    },
+                    right: XRefItem {
+                        literal: '僞',
+                        src_identifier: None,
+                    },
+                }],
                 compositions: vec![Composition {
                     data: vec![
                         CompositionPart::Destructive(DestructionForm::Horizontally3),
@@ -81,6 +115,34 @@ mod test {
         let parsed = IDS::from_str(input);
         assert!(parsed.is_ok());
         // TODO: add full test
+    }
+
+    #[test]
+    fn test_xref_item() {
+        let input = "U+5098";
+        let xref_item = XRefItem::from_str(input);
+        assert!(xref_item.is_ok());
+        assert_eq!(
+            xref_item.unwrap(),
+            XRefItem {
+                literal: '傘',
+                src_identifier: None,
+            }
+        );
+    }
+
+    #[test]
+    fn test_xref_item_origin() {
+        let input = "U+5098(V)";
+        let xref_item = XRefItem::from_str(input);
+        assert!(xref_item.is_ok());
+        assert_eq!(
+            xref_item.unwrap(),
+            XRefItem {
+                literal: '傘',
+                src_identifier: Some(Origin::Vietnam)
+            }
+        );
     }
 
     #[test]

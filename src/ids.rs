@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-use crate::{composition::Composition, error::ParseError, xref::XRef};
+use crate::{composition::Composition, error::ParseError, XRef};
 
 /// A full Ideographic Destruction Sequence item
 #[derive(Default, Debug, PartialEq, Eq)]
@@ -26,18 +26,18 @@ impl FromStr for IDS {
             .unwrap();
 
         let mut compositions = vec![];
-        let xrefs = vec![];
+        let mut xrefs = vec![];
 
         while let Some(part) = split.next() {
             if part.starts_with('^') {
                 let composition = Composition::from_str(part)?;
                 compositions.push(composition);
             } else if part.starts_with('*') {
-                // TODO
-                //let xref = xref::XRef::
+                if let Some(xref) = XRef::from_str(&part[1..]).ok() {
+                    xrefs.push(xref);
+                }
             }
         }
-
         Ok(IDS {
             literal,
             compositions,
