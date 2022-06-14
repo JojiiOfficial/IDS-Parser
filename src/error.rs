@@ -1,7 +1,7 @@
 use std::fmt::Display;
 
 /// Error occurring during parsing process
-#[derive(Debug)]
+#[derive(Debug, Copy, Clone)]
 pub enum ParseError {
     InvalidOrigin(char),
     InvalidDestructiveForm(char),

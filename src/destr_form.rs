@@ -1,7 +1,9 @@
+use serde::{Deserialize, Serialize};
+
 use crate::error::ParseError;
 
 /// Describing in which form radicals get combined with each other
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum DestructionForm {
     Vertically,
     Horizontally,

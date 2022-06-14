@@ -1,9 +1,11 @@
 use std::str::FromStr;
 
-use crate::{composition::Composition, error::ParseError, XRef};
+use serde::{Deserialize, Serialize};
+
+use crate::{composition::Composition, error::ParseError, Origin, XRef};
 
 /// A full Ideographic Destruction Sequence item
-#[derive(Default, Debug, PartialEq, Eq)]
+#[derive(Default, Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct IDS {
     pub literal: char,
     pub compositions: Vec<Composition>,
@@ -48,5 +50,11 @@ impl FromStr for IDS {
 }
 
 impl IDS {
-    //
+    /// Returns the `Composition` with `origin`
+    #[inline]
+    pub fn comp_by_lang(&self, origin: Origin) -> Option<&Composition> {
+        self.compositions
+            .iter()
+            .find(|i| i.reg_origins.contains(&origin))
+    }
 }

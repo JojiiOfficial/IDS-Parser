@@ -1,16 +1,17 @@
+use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 
 use crate::{destr_form::DestructionForm, error::ParseError, origin::Origin};
 
 /// A single composition of the format "^⿳亠口冋$(GHJKTV)"
-#[derive(Default, Debug, PartialEq, Eq)]
+#[derive(Default, Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Composition {
     pub reg_origins: Vec<Origin>,
     pub data: Vec<CompositionPart>,
 }
 
 /// A single part of the full composition
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum CompositionPart {
     Destructive(DestructionForm),
     Radical(char),
@@ -88,7 +89,7 @@ impl CompositionPart {
 }
 
 /// A modifier for another component
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum Modifier {
     UnrepresntableCompontent,
     IdeographicVariation,

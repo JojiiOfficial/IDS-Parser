@@ -1,22 +1,22 @@
+use crate::{error::ParseError, utils, Origin};
+use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 
-use crate::{error::ParseError, utils, Origin};
-
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct XRef {
     pub ref_type: RefType,
     pub left: XRefItem,
     pub right: XRefItem,
 }
 
-#[derive(Default, Debug, PartialEq, Eq)]
+#[derive(Default, Copy, Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct XRefItem {
     pub literal: char,
     pub src_identifier: Option<Origin>,
 }
 
 /// Type of cross reference
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum RefType {
     /// Glyphs are the sams for different characters
     Full,

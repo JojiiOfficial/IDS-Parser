@@ -1,7 +1,9 @@
+use serde::{Deserialize, Serialize};
+
 use crate::error::ParseError;
 
 /// What origin a radical composition is from
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub enum Origin {
     China,
     HongKong,
@@ -22,7 +24,6 @@ pub enum Origin {
 // Parse an origin from its prefix code
 impl TryFrom<char> for Origin {
     type Error = ParseError;
-    // TODO: parse "(G[B])"
 
     /// Parse an origin from its prefix code
     #[inline]
