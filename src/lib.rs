@@ -31,8 +31,8 @@ const MAPPINGS: &[(char, char)] = &[
 pub fn map_special_form(inp: char) -> char {
     MAPPINGS
         .iter()
-        .find(|i| i.0 == inp)
-        .map(|i| i.1)
+        .find(|i| i.1 == inp)
+        .map(|i| i.0)
         .unwrap_or(inp)
 }
 

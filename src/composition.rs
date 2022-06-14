@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 
-use crate::{destr_form::DestructionForm, error::ParseError, origin::Origin};
+use crate::{destr_form::DestructionForm, error::ParseError, map_special_form, origin::Origin};
 
 /// A single composition of the format "^⿳亠口冋$(GHJKTV)"
 #[derive(Default, Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -110,7 +110,8 @@ impl TryFrom<char> for CompositionPart {
         if let Ok(modifier) = Modifier::try_from(value) {
             return Ok(CompositionPart::Modifier(modifier));
         }
-        Ok(CompositionPart::Radical(value))
+        let mapped = map_special_form(value);
+        Ok(CompositionPart::Radical(mapped))
     }
 }
 
