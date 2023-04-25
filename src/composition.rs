@@ -210,13 +210,12 @@ fn resolve_unencoded_comp(nr: u8) -> CompositionPart {
 }
 
 impl Composition {
-    /// Returns all radicals from the composition
-    #[inline]
-    pub fn get_radicals(&self) -> Vec<char> {
-        self.data
-            .iter()
-            .filter_map(|i| i.as_radical())
-            .copied()
-            .collect()
+    /// Returns an iterator over all displayable radicals, including decoded unencoded components.
+    pub fn get_radicals(&self) -> impl Iterator<Item = char> + '_ {
+        self.data.iter().filter_map(|i| match i {
+            CompositionPart::Radical(r) => Some(*r),
+            CompositionPart::UnencodedComponent(c) => conv_special(*c),
+            _ => None,
+        })
     }
 }
