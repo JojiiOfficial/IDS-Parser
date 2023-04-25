@@ -1,7 +1,10 @@
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 
-use crate::{destr_form::DestructionForm, error::ParseError, map_special_form, origin::Origin};
+use crate::{
+    destr_form::DestructionForm, error::ParseError, map_special_form, origin::Origin,
+    sepecial_components::conv_special,
+};
 
 /// A single composition of the format "^⿳亠口冋$(GHJKTV)"
 #[derive(Default, Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -79,9 +82,9 @@ impl CompositionPart {
         matches!(self, Self::UnencodedComponent(..))
     }
 
-    pub fn as_unencoded_component(&self) -> Option<&u8> {
+    pub fn as_unencoded_component(&self) -> Option<char> {
         if let Self::UnencodedComponent(v) = self {
-            Some(v)
+            conv_special(*v)
         } else {
             None
         }

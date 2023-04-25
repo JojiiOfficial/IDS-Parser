@@ -3,6 +3,7 @@ pub mod destr_form;
 pub mod error;
 pub mod ids;
 pub mod origin;
+pub mod sepecial_components;
 pub mod utils;
 pub mod xref;
 
@@ -163,6 +164,21 @@ mod test {
                 src_identifier: Some(Origin::Vietnam)
             }
         );
+    }
+
+    #[test]
+    fn test_special_unencoded() {
+        let input = "U+9E7F	鹿	^⿸{55}比$(GHJKTV)";
+        let parsed = IDS::from_str(input);
+        assert!(parsed.is_ok());
+        let parsed = parsed.unwrap();
+        let e = parsed
+            .compositions
+            .iter()
+            .flat_map(|i| i.data.iter())
+            .filter_map(|i| i.as_unencoded_component())
+            .collect::<Vec<_>>();
+        assert!(e.contains(&'\u{F2D0}'));
     }
 
     #[test]
