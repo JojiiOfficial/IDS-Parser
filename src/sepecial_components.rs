@@ -1,6 +1,6 @@
 /// Converts one of those unencoded special characters
 pub fn conv_special(nr: u8) -> Option<char> {
-    SPECIAL_IDS.get(nr as usize).map(|c| *c)
+    SPECIAL_IDS.get(nr as usize - 1).copied()
 }
 
 pub const SPECIAL_IDS: &[char] = &[
