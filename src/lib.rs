@@ -167,16 +167,28 @@ mod test {
     }
 
     #[test]
+    fn test_special_unencoded2() {
+        let input = "U+8C61	象	^⿱{02}𧰨$(GHJKTV)";
+        let parsed = IDS::from_str(input).unwrap();
+        let e = parsed
+            .comp_by_lang(Origin::Japan)
+            .unwrap()
+            .get_radicals()
+            .collect::<Vec<_>>();
+        assert!(e.contains(&'𧰨'));
+        assert!(e.contains(&'\u{F2A6}'));
+    }
+
+    #[test]
     fn test_special_unencoded() {
         let input = "U+9E7F	鹿	^⿸{55}比$(GHJKTV)";
         let parsed = IDS::from_str(input);
         assert!(parsed.is_ok());
         let parsed = parsed.unwrap();
         let e = parsed
-            .compositions
-            .iter()
-            .flat_map(|i| i.data.iter())
-            .filter_map(|i| i.as_unencoded_component())
+            .comp_by_lang(Origin::Japan)
+            .unwrap()
+            .get_radicals()
             .collect::<Vec<_>>();
         assert!(e.contains(&'\u{F2D0}'));
     }
