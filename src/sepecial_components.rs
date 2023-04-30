@@ -69,22 +69,14 @@ pub fn conv_special(nr: u8) -> Option<char> {
 
 /// Sorted list of special ids.
 pub const SPECIAL_IDS: &[char] = &[
-    '\u{ec30}', '\u{ece0}', '\u{ece1}', '\u{ece2}', '\u{ece3}', '\u{ece4}', '\u{ece5}', '\u{ece6}',
-    '\u{ece7}', '\u{ece9}', '\u{ecea}', '\u{eceb}', '\u{ecec}', '\u{eced}', '\u{ecee}', '\u{ecef}',
-    '\u{ecf0}', '\u{ecf1}', '\u{ecf2}', '\u{ecf3}', '\u{ecf5}', '\u{ecf6}', '\u{ecf7}', '\u{ecf8}',
-    '\u{ecf9}', '\u{ecfa}', '\u{ecfb}', '\u{ecfc}', '\u{ecfd}', '\u{ecfe}', '\u{ecff}', '\u{ef31}',
-    '\u{ef32}', '\u{ef33}', '\u{ef34}', '\u{ef35}', '\u{ef36}', '\u{ef37}', '\u{f0cf}', '\u{f101}',
-    '\u{f13c}', '\u{f13d}', '\u{f29e}', '\u{f29f}', '\u{f2a4}', '\u{f2a5}', '\u{f2a7}', '\u{f2a8}',
-    '\u{f2a9}', '\u{f2aa}', '\u{f2ab}', '\u{f2ac}', '\u{f2ad}', '\u{f2ae}', '\u{f2b0}', '\u{f2b1}',
-    '\u{f2b2}', '\u{f2b3}', '\u{f2b4}', '\u{f2b5}', '\u{f2b6}', '\u{f2b9}', '\u{f2ba}', '\u{f2bb}',
-    '\u{f2bc}', '\u{f2bd}', '\u{f2be}', '\u{f2bf}', '\u{f2c1}', '\u{f2c3}', '\u{f2c4}', '\u{f2c6}',
-    '\u{f2c7}', '\u{f2c8}', '\u{f2c9}', '\u{f2ca}', '\u{f2cb}', '\u{f2cc}', '\u{f2cd}', '\u{f2ce}',
-    '\u{f2cf}', '\u{f2d0}', '\u{f2d1}', '\u{f2d2}', '\u{f2d4}', '\u{f2e3}', '\u{f2e5}', '\u{f2e6}',
-    '\u{f2e7}', '\u{f2e8}', '\u{f2e9}', '\u{f2f2}', '\u{f2f4}', '\u{f2f5}', '\u{f2f7}', '\u{f2fa}',
-    '\u{f313}', '\u{f314}', '\u{f318}', '\u{f319}', '\u{f31a}', '\u{f31b}', '\u{f3be}', '\u{f4f3}',
-    '\u{f5de}', '\u{f5df}', '\u{f5e1}', '\u{f5ee}', '\u{f5f0}', '\u{f5f4}', '\u{f5f5}', '\u{f5f6}',
-    '\u{f5f7}', '\u{f5f8}', '\u{f5f9}', '\u{f5fa}', '\u{f5fb}', '\u{f5fc}', '\u{f5fd}', '\u{f5fe}',
-    '\u{f5ff}',
+    '\u{f101}', '\u{f13c}', '\u{f13d}', '\u{f29f}', '\u{f2a4}', '\u{f2a5}', '\u{f2a6}', '\u{f2a7}',
+    '\u{f2a8}', '\u{f2a9}', '\u{f2aa}', '\u{f2ab}', '\u{f2ac}', '\u{f2ad}', '\u{f2ae}', '\u{f2b0}',
+    '\u{f2b1}', '\u{f2b3}', '\u{f2b4}', '\u{f2b5}', '\u{f2ba}', '\u{f2bb}', '\u{f2bc}', '\u{f2bd}',
+    '\u{f2be}', '\u{f2bf}', '\u{f2c0}', '\u{f2c1}', '\u{f2c3}', '\u{f2c4}', '\u{f2c7}', '\u{f2c8}',
+    '\u{f2ca}', '\u{f2cb}', '\u{f2cd}', '\u{f2ce}', '\u{f2cf}', '\u{f2d0}', '\u{f2d1}', '\u{f2d2}',
+    '\u{f2d3}', '\u{f2d4}', '\u{f2e6}', '\u{f2e7}', '\u{f2e8}', '\u{f2e9}', '\u{f2f2}', '\u{f2f4}',
+    '\u{f2f5}', '\u{f2f7}', '\u{f2fa}', '\u{f313}', '\u{f315}', '\u{f319}', '\u{f31a}', '\u{f4f3}',
+    '\u{f5f0}', '\u{f5f4}', '\u{f5f5}', '\u{f5f6}',
 ];
 
 #[inline]

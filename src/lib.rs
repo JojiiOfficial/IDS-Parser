@@ -50,6 +50,7 @@ mod test {
         destr_form::DestructionForm,
         ids::IDS,
         origin::Origin,
+        sepecial_components::is_special,
         xref::{RefType, XRefItem},
     };
 
@@ -177,6 +178,7 @@ mod test {
             .collect::<Vec<_>>();
         assert!(e.contains(&'𧰨'));
         assert!(e.contains(&'\u{F2A6}'));
+        assert!(is_special(&'\u{F2A6}'));
     }
 
     #[test]
