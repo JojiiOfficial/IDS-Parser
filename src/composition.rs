@@ -19,7 +19,7 @@ pub enum CompositionPart {
     Destructive(DestructionForm),
     Radical(char),
     Modifier(Modifier),
-    UnencodedComponent(u8),
+    UnencodedComponent(u32),
 }
 
 impl CompositionPart {
@@ -144,7 +144,7 @@ impl FromStr for Composition {
                     }
                     unenc_nr.push(pnr);
                 }
-                let unenc_nr: u8 = unenc_nr
+                let unenc_nr: u32 = unenc_nr
                     .parse()
                     .map_err(|_| ParseError::UnexpectedCharacter)?;
                 parts.push(resolve_unencoded_comp(unenc_nr));
@@ -205,7 +205,7 @@ impl Modifier {
 }
 
 #[inline]
-fn resolve_unencoded_comp(nr: u8) -> CompositionPart {
+fn resolve_unencoded_comp(nr: u32) -> CompositionPart {
     CompositionPart::UnencodedComponent(nr)
 }
 

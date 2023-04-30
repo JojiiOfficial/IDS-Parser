@@ -177,8 +177,8 @@ mod test {
             .get_radicals()
             .collect::<Vec<_>>();
         assert!(e.contains(&'𧰨'));
-        assert!(e.contains(&'\u{F2A6}'));
-        assert!(is_special(&'\u{F2A6}'));
+        assert!(e.contains(&'\u{f0cf}'));
+        assert!(is_special(&'\u{f0cf}'));
     }
 
     #[test]
@@ -193,6 +193,7 @@ mod test {
             .get_radicals()
             .collect::<Vec<_>>();
         assert!(e.contains(&'\u{F2D0}'));
+        assert!(is_special(&'\u{F2D0}'));
     }
 
     #[test]
